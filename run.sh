@@ -28,10 +28,9 @@ kubectl get ingress $ns
 
 IP=$(kubectl get ingress -n web-app php-app-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
-echo -e "\n ------ Print test ------ \n"
+echo -e "\n ------ Starting tests ------ \n"
 #ip resolving
 echo "$IP $MYHOST" | sudo tee -a /etc/hosts
-#cat /etc/hosts
+
 #checking connection
-echo -e "\n ------ Starting tests ------ \n"
 for i in version1 version2; do curl my-php-web-app.com/$i; done
