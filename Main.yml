@@ -1,0 +1,78 @@
+#----------------------------------------------
+#Starts namespace, two deployments and services
+#Then launch ingress and apply ingress yaml
+#----------------------------------------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: web-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-app-v1
+  namespace: web-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: php-first
+  template:
+    metadata:
+      labels:
+        dep: php-app-v1
+        app: php-first
+    spec:
+      containers:
+      - name: web-application-v1
+        image: wood8/myk8sphp_app:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: app-service-v1
+  namespace: web-app
+spec:
+  selector:
+    app: php-first
+  ports:
+    - name: http
+      port: 8181
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-app-v2
+  namespace: web-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: php-second
+  template:
+    metadata:
+      labels:
+        dep: php-app-v2
+        app: php-second
+    spec:
+      containers:
+      - name: web-application-v2
+        image: wood8/myk8sphp_app:version2
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: app-service-v2
+  namespace: web-app
+spec:
+  selector:
+    app: php-second
+  ports:
+    - name: http
+      port: 8282
+      targetPort: 80
