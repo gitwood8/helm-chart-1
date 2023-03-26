@@ -1,0 +1,5 @@
+apiVersion: v2
+name: Wood-App-HelmChart
+type: application
+version: 3.11 #Helm chart version
+appVersion: 1.0.7 #My app version

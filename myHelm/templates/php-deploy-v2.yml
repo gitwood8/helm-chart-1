@@ -1,0 +1,41 @@
+#apiVersion: v1 #K8s API version
+#kind: Namespace
+#metadata:
+#  name: web-app
+#---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-dep2
+  namespace: web-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: 
+      app: php-second
+  template:
+    metadata:
+      labels:
+        dep: {{ .Release.Name }}
+        app: php-second
+    spec:
+      containers:
+      - name: web-application-v2
+        image: wood8/myk8sphp_app:version2
+        ports:
+        - containerPort: 80 #cause in image dockerfile expoded 80 port
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: app-service-v2
+  namespace: web-app
+spec:
+  selector:
+    app: php-second
+  ports:
+    - name: http
+#specifies the port that the Service should listen on
+      port: 8282
+#specifies the port on the Pods that the Service should forward traffic to
+      targetPort: 80
