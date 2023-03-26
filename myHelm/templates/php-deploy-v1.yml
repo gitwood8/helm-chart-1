@@ -6,7 +6,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-dep-1
+  name: {{ .Release.Name }}-dep-1 #Name in installation: helm install "name" dir
   namespace: web-app
 spec:
   replicas: {{ .Values.replicaCount }}

@@ -5,7 +5,7 @@ echo "my-php-web-app.com"
 read -p "Enter the desired hostname for your app: " MYHOST
 
 kubectl apply -f php-deploy-v1.yml
-kubectl apply -f php-deploy-v2.yml
+kubectl apply -f php-deploy-v2.yml 
 
 echo -e "\n ------ Apply Deployments in progress ------ \n"
 sleep 10
